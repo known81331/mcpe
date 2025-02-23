@@ -85,7 +85,7 @@ void PauseScreen::init()
 	}
 
 	//swap the options and quit buttons around (??)
-	std::swap(m_btnOptions.m_yPos, m_btnQuit.m_yPos);
+//	std::swap(m_btnOptions.m_yPos, m_btnQuit.m_yPos);
 
 	for (int i = 0; i < int(m_buttons.size()); i++)
 		m_buttonTabList.push_back(m_buttons[i]);

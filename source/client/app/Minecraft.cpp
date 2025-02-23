@@ -927,8 +927,8 @@ void Minecraft::prepareLevel(const std::string& unused)
 			if (!pChunk)
 				continue;
 
-			if (pChunk->field_237)
-				continue;
+			//if (pChunk->field_237)
+			//	continue;
 
 			pChunk->m_bUnsaved = false;
 			pChunk->clearUpdateMap();

@@ -98,14 +98,43 @@ void Button::render(Minecraft* pMinecraft, int xPos, int yPos)
 	Font* pFont = pMinecraft->m_pFont;
 	Textures* pTexs = pMinecraft->m_pTextures;
 
-	pTexs->loadAndBindTexture("gui/gui.png");
+	pTexs->loadAndBindTexture("gui/spritesheet.png");
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	int iYPos = 20 * getYImage(field_36) + 46;
-
-	blit(m_xPos, m_yPos, 0, iYPos, m_width / 2, m_height, 0, 20);
-	blit(m_xPos + m_width / 2, m_yPos, 200 - m_width / 2, iYPos, m_width / 2, m_height, 0, 20);
-
+	int iYPos = 64; //20 * getYImage(field_36) + 46;
+    
+    if (!field_36) {
+        blit(m_xPos, m_yPos, 16, iYPos, 60, 13, 60, 22);
+        blit(m_xPos+2, m_yPos, 20, iYPos, m_width-2, 13, 5, 22);
+        blit(m_xPos + m_width - 10, m_yPos, 22, iYPos, 10, 13, 10, 22);
+        
+        iYPos = 68;
+        
+        blit(m_xPos, m_yPos+6, 16, iYPos, 60, m_height-6, 60, 16);
+        blit(m_xPos+2, m_yPos+6, 20, iYPos, m_width-2, m_height-6, 5, 16);
+        blit(m_xPos + m_width - 10, m_yPos+6, 22, iYPos, 10, m_height-6, 10, 16);
+        
+        blit(m_xPos, m_yPos+m_height-10, 16, iYPos, 60, 13, 60, 16);
+        blit(m_xPos+2, m_yPos+m_height-10, 20, iYPos, m_width-2, 13, 5, 16);
+        blit(m_xPos + m_width - 10, m_yPos+m_height-10, 22, iYPos, 10, 13, 10, 16);
+        
+    }
+    else {
+        blit(m_xPos, m_yPos, 0, iYPos, 60, 13, 60, 15);
+        blit(m_xPos+2, m_yPos, 2, iYPos, m_width-2, 13, 5, 15);
+        blit(m_xPos + m_width - 10, m_yPos, 6, iYPos, 10, 13, 10, 15);
+        
+        iYPos = 68;
+        
+        blit(m_xPos, m_yPos+6, 0, iYPos, 60, m_height, 60, 15);
+        blit(m_xPos+2, m_yPos+6, 2, iYPos, m_width-2, m_height, 5, 15);
+        blit(m_xPos + m_width - 10, m_yPos+6, 6, iYPos, 10, m_height, 10, 15);
+        
+        blit(m_xPos, m_yPos+m_height-10, 0, iYPos, 60, 13, 60, 15);
+        blit(m_xPos+2, m_yPos+m_height-10, 2, iYPos, m_width-2, 13, 5, 15);
+        blit(m_xPos + m_width - 10, m_yPos+m_height-10, 6, iYPos, 10, 13, 10, 15);
+    }
+    
 	renderBg(pMinecraft, xPos, yPos);
 
 	int textColor;

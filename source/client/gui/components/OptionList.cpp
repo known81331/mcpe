@@ -197,7 +197,7 @@ void OptionList::drawOnOffSwitch(int x, int y, bool state, bool disabled)
 {
 	// Obs: The color setting that affected disabled items' texts will also affect this.
 
-	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/gui_custom.png");
+	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/touchgui.png");
 	
 	blit(x, y, 0, state ? 0 : 18, C_ON_OFF_SWITCH_WIDTH, C_ON_OFF_SWITCH_HEIGHT, C_ON_OFF_SWITCH_WIDTH, C_ON_OFF_SWITCH_HEIGHT);
 

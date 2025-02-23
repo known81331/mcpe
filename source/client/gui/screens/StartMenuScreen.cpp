@@ -13,9 +13,11 @@
 #include "SelectWorldScreen.hpp"
 #include "JoinGameScreen.hpp"
 
+
 #if defined(_WIN32) || (defined(TARGET_OS_MAC) && TARGET_OS_IPHONE == 0)
 #define CAN_QUIT
 #endif
+#undef CAN_QUIT
 
 // special mode so that we can crop out the title:
 //#define TITLE_CROP_MODE
@@ -349,9 +351,9 @@ const char* gSplashes[] =
 };
 
 StartMenuScreen::StartMenuScreen() :
-	m_startButton  (2,   0, 0, 160, 24, "Start Game"),
-	m_joinButton   (3,   0, 0, 160, 24, "Join Game"),
-	m_optionsButton(4,   0, 0,  78, 22, "Options"),
+	m_startButton  (2,   0, 0, 110, 32, "Play"),
+	m_joinButton   (3,   0, 0, 160, 32, "Join Game"),
+	m_optionsButton(4,   0, 0,  40, 40, "Options"),
 	m_testButton   (999, 0, 0,  78, 22, "Test"),
 	m_buyButton    (5,   0, 0,  78, 22, "Buy")
 {
@@ -432,12 +434,12 @@ void StartMenuScreen::init()
 {
 	int yPos = m_height / 2;
 
-	m_joinButton.m_yPos = yPos + 25;
+	m_joinButton.m_yPos = yPos + 30;
 	m_startButton.m_yPos = yPos - 3;
 
 	yPos += 55;
 
-	m_optionsButton.m_yPos = yPos;
+	m_optionsButton.m_yPos = m_height-44; //yPos;
 	m_testButton.m_yPos = yPos;
 	m_buyButton.m_yPos = yPos;
 
@@ -446,15 +448,15 @@ void StartMenuScreen::init()
 	int x1 = m_width - m_joinButton.m_width;
 
 	m_joinButton.m_xPos = x1 / 2;
-	m_optionsButton.m_xPos = x1 / 2;
+	m_optionsButton.m_xPos = m_width - 44; x1 / 2;
 	m_buyButton.m_xPos = x1 / 2 + m_optionsButton.m_width + 4;
 	m_testButton.m_xPos = x1 / 2 + m_optionsButton.m_width + 4;
 
 	// add the buttons to the screen:
 	m_buttons.push_back(&m_startButton);
 	m_buttonTabList.push_back(&m_startButton);
-	m_buttons.push_back(&m_joinButton);
-	m_buttonTabList.push_back(&m_joinButton);
+	//m_buttons.push_back(&m_joinButton);
+	//m_buttonTabList.push_back(&m_joinButton);
 	m_buttons.push_back(&m_optionsButton);
 	m_buttonTabList.push_back(&m_optionsButton);
 
@@ -466,7 +468,7 @@ void StartMenuScreen::init()
 	field_154 = "\xFFMojang AB";
 	field_16C = m_width - 1 - m_pFont->width(field_154);
 
-	field_170 = "v0.1.0 alpha"
+	field_170 = "v0.6.5 alpha"
 #ifdef DEMO
 		" (Demo)"
 #endif
@@ -533,8 +535,8 @@ void StartMenuScreen::render(int a, int b, float c)
 #ifdef TITLE_CROP_MODE
 	fill(0, 0, m_width, m_height, 0xFF00FF00);
 #else
-	//renderBackground();
-	renderMenuBackground(c);
+	renderBackground();
+	//renderMenuBackground(c);
 #endif
 
 	//int titleYPos = 4;
@@ -548,13 +550,13 @@ void StartMenuScreen::render(int a, int b, float c)
 		titleYPos = 4;
 	}
 
-	if (m_pMinecraft->getOptions()->m_bOldTitleLogo)
+	//if (m_pMinecraft->getOptions()->m_bOldTitleLogo)
 		drawLegacyTitle();
-	else
-		draw3dTitle(c);
+//	else
+//		draw3dTitle(c);
 
-	drawString(m_pFont, field_170, field_188, 58 + titleYPos, 0xFFCCCCCC);
-	drawString(m_pFont, field_154, field_16C, m_height - 10, 0x00FFFFFF);
+	drawString(m_pFont, field_170, 2, m_height - 20, 0x00FFFFFF);
+	drawString(m_pFont, field_154, 2, m_height - 10, 0x00FFFFFF);
 
 	// Draw the splash text, if we have enough room.
 #ifndef TITLE_CROP_MODE
@@ -678,7 +680,7 @@ void StartMenuScreen::draw3dTitle(float f)
 
 				// rotate 90 deg on the X axis to correct lighting
 				glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-				m_tileRenderer.renderTile(pTile, i == 0 ? 999 : 0, bright);
+				m_tileRenderer.renderTile(pTile, i == 0 ? 999 : 0);
 
 				glPopMatrix();
 			}

@@ -22,7 +22,8 @@ TouchscreenInput_TestFps::TouchscreenInput_TestFps(Minecraft* pMinecraft, Option
 	m_pAreaRight(nullptr),
 	m_pAreaForward(nullptr),
 	m_pAreaBackward(nullptr),
-	m_pAreaJump(nullptr)
+	m_pAreaJump(nullptr),
+	m_pAreaSneak(nullptr)
 {
 	for (int i = 0; i < 10; i++)
 		field_30[i] = 0;
@@ -84,8 +85,8 @@ void TouchscreenInput_TestFps::setScreenSize(int width, int height)
 {
 	m_touchAreaModel.clear();
 
-	float widthM = float(width) * 0.11f;
 	float heightM = float(height) * 0.18f;
+	float widthM = heightM;//float(width) * 0.11f;
 
 	float x1[4], y1[4], x2[4], y2[4];
 
@@ -110,9 +111,14 @@ void TouchscreenInput_TestFps::setScreenSize(int width, int height)
 	m_pAreaForward = new PolygonArea(4, x2, y2);
 	m_touchAreaModel.addArea(100 + INPUT_FORWARD, m_pAreaForward);
 
-	TransformArray(4, x1, y1, x2, y2, middleX, middleY, 1.0f, 1.0f);
+	TransformArray(4, x1, y1, x2, y2, width-middleX-widthM, middleY, 1.0f, 1.0f);
 	m_pAreaJump = new PolygonArea(4, x2, y2);
 	m_touchAreaModel.addArea(100 + INPUT_JUMP, m_pAreaJump);
+
+	TransformArray(4, x1, y1, x2, y2, middleX, middleY, 1.0f, 1.0f);
+	m_pAreaSneak = new PolygonArea(4, x2, y2);
+	m_touchAreaModel.addArea(100 + INPUT_SNEAK, m_pAreaSneak);
+
 
 	TransformArray(4, x1, y1, x2, y2, middleX, middleY + heightM, 1.0f, 1.0f);
 	m_pAreaBackward = new PolygonArea(4, x2, y2);
@@ -159,10 +165,11 @@ void TouchscreenInput_TestFps::tick(Player* pPlayer)
 		{
 			if (pPlayer->isInWater())
 				m_bJumpButton = true;
-			else
-				bJumpPressed = true;
-
-			pointerId = 100; // forward
+			else if (Multitouch::isPressed(finger))
+				m_bSneakButton = !m_bSneakButton;
+				
+			field_6C[5] = m_bSneakButton;
+			//pointerId = 100; // forward
 		}
 
 		if (pointerId == 100 + INPUT_JUMP) // jump
@@ -271,6 +278,10 @@ void TouchscreenInput_TestFps::render(float f)
 
 	t.color(isButtonDown(100 + INPUT_JUMP) ? 0xC0C0C0 : 0xFFFFFF, 0x80);
 	RenderTouchButton(&t, m_pAreaJump, 0, 176);
+
+
+	t.color(isButtonDown(100 + INPUT_SNEAK) ? 0xC0C0C0 : 0xFFFFFF, 0x80);
+	RenderTouchButton(&t, m_pAreaSneak, 0, 176);
 
 	t.draw();
 

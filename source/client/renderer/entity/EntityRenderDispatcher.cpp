@@ -47,7 +47,7 @@ EntityRenderDispatcher::EntityRenderDispatcher() :
 	m_CameraRenderer.init(this);
 	m_ItemRenderer.init(this);
 	m_RocketRenderer.init(this);
-	m_FallingTileRenderer.init(this);
+	//m_FallingTileRenderer.init(this);
 }
 
 float EntityRenderDispatcher::distanceToSqr(float x, float y, float z)
@@ -95,8 +95,8 @@ EntityRenderer* EntityRenderDispatcher::getRenderer(int renderType)
 		case RENDER_ROCKET:
 			return &m_RocketRenderer;
 		// TODO
-		case RENDER_FALLING_TILE:
-			return &m_FallingTileRenderer;
+	//	case RENDER_FALLING_TILE:
+	//		return &m_FallingTileRenderer;
 	}
 
 	return nullptr;

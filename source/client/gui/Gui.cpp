@@ -242,6 +242,7 @@ void Gui::render(float f, bool bHaveScreen, int mouseX, int mouseY)
 	glDisable(GL_BLEND);
 #endif
 
+	m->m_pTextures->loadAndBindTexture("gui/icons.png");
 	if (m_pMinecraft->m_pGameMode->canHurtPlayer())
 	{
 		LocalPlayer* pLP = m_pMinecraft->m_pLocalPlayer;
@@ -264,8 +265,12 @@ void Gui::render(float f, bool bHaveScreen, int mouseX, int mouseY)
 
 		//@NOTE: Alpha-style health UI. I'll probably remove this on release.
 #ifndef ORIGINAL_CODE
-		heartX = cenX - 91;
-		heartYStart = height - 32;
+	//	heartX = cenX - 91;
+	//	heartYStart = height - 32;
+        
+        heartX = 2; // why?
+        heartYStart = 2;
+
 #endif
 
 		int playerHealth = pLP->m_health;
@@ -307,6 +312,11 @@ void Gui::render(float f, bool bHaveScreen, int mouseX, int mouseY)
 #ifndef ORIGINAL_CODE
 			bubbleX = cenX - 91;
 			bubbleY = height - 41;
+            
+            
+            bubbleX = 2; // why?
+            bubbleY = 12;
+
 #endif
 
 			//@NOTE: Not sure this works as it should
@@ -534,7 +544,7 @@ void Gui::renderMessages(bool bShowAll)
 int Gui::getNumSlots()
 {
 	if (m_pMinecraft->isTouchscreen())
-		return 4;
+		return 7;
 
 	return 9;
 }

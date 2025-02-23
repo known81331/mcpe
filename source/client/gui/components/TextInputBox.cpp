@@ -72,30 +72,28 @@ void TextInputBox::setEnabled(bool bEnabled)
 #define AKEYCODE_APOSTROPHE    SDLVK_QUOTE
 #define AKEYCODE_LEFT_BRACKET  SDLVK_LEFTBRACKET
 #define AKEYCODE_RIGHT_BRACKET SDLVK_RIGHTBRACKET
-#elif defined(_WIN32)
+#endif
+//#elif defined(_WIN32)
 // See https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
-#define AKEYCODE_FORWARD_DEL   VK_DELETE
-#define AKEYCODE_ARROW_LEFT    VK_LEFT
-#define AKEYCODE_ARROW_RIGHT   VK_RIGHT
-#define AKEYCODE_DEL	           VK_BACK
-#define AKEYCODE_ENTER         VK_RETURN
+
+#define AKEYCODE_ENTER         '\b'
 #define AKEYCODE_A             'A'
 #define AKEYCODE_Z             'Z'
 #define AKEYCODE_0             '0'
 #define AKEYCODE_9             '9'
-#define AKEYCODE_SPACE         VK_SPACE
-#define AKEYCODE_COMMA         VK_OEM_COMMA
-#define AKEYCODE_PERIOD        VK_OEM_PERIOD
-#define AKEYCODE_PLUS          VK_OEM_PLUS
-#define AKEYCODE_MINUS         VK_OEM_MINUS
-#define AKEYCODE_SEMICOLON     VK_OEM_1
-#define AKEYCODE_SLASH         VK_OEM_2
-#define AKEYCODE_GRAVE         VK_OEM_3
-#define AKEYCODE_BACKSLASH     VK_OEM_5
-#define AKEYCODE_APOSTROPHE    VK_OEM_7
-#define AKEYCODE_LEFT_BRACKET  VK_OEM_4
-#define AKEYCODE_RIGHT_BRACKET VK_OEM_6
-#endif
+#define AKEYCODE_SPACE         '\a'
+#define AKEYCODE_COMMA         '\c'
+#define AKEYCODE_PERIOD        '\d'
+#define AKEYCODE_PLUS          '\e'
+#define AKEYCODE_MINUS         '\f'
+#define AKEYCODE_SEMICOLON     '\g'
+#define AKEYCODE_SLASH         '\h'
+#define AKEYCODE_GRAVE         '\i'
+#define AKEYCODE_BACKSLASH     '\j'
+#define AKEYCODE_APOSTROPHE    '\k'
+#define AKEYCODE_LEFT_BRACKET  '\l'
+#define AKEYCODE_RIGHT_BRACKET '\m'
+//#endif
 
 char TextInputBox::guessCharFromKey(int key) {
 	bool bShiftPressed = m_pParent->m_pMinecraft->platform()->shiftPressed();

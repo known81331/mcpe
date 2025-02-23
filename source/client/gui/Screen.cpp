@@ -79,19 +79,19 @@ void Screen::keyPressed(int key)
 	if (m_buttonTabList.size())
 	{
 #ifndef ENH_HIGHLIGHT_BY_HOVER
-		if (m_pMinecraft->getOptions()->isKey(MENU_NEXT, key))
+		if (m_pMinecraft->getOptions()->isKey(KM_MENU_NEXT, key))
 		{
 			m_tabButtonIndex++;
 			if (m_tabButtonIndex == int(m_buttonTabList.size()))
 				m_tabButtonIndex = 0;
 		}
-		if (m_pMinecraft->getOptions()->isKey(MENU_PREVIOUS, key))
+		if (m_pMinecraft->getOptions()->isKey(KM_MENU_PREVIOUS, key))
 		{
 			m_tabButtonIndex--;
 			if (m_tabButtonIndex == -1)
 				m_tabButtonIndex = int(m_buttonTabList.size() - 1);
 		}
-		if (m_pMinecraft->getOptions()->isKey(MENU_OK, key))
+		if (m_pMinecraft->getOptions()->isKey(KM_MENU_OK, key))
 		{
 			if (m_buttonTabList[m_tabButtonIndex]->m_bEnabled)
 			{
@@ -142,6 +142,7 @@ void Screen::renderMenuBackground(float f)
 		return;
 	}
 
+    /*
 	g_panoramaAngle += float(30.0 * m_pMinecraft->m_fDeltaTime);
 
 	float aspectRatio;
@@ -228,7 +229,7 @@ void Screen::renderMenuBackground(float f)
 	glEnable(GL_BLEND);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
-
+*/
 	fillGradient(0, 0, m_width, m_height, 0x89000000, 0x89FFFFFF);
 }
 
@@ -455,6 +456,7 @@ void Screen::renderDirtBackground(int unk)
 {
 	glDisable(GL_FOG);
 
+	/*
 	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/background.png");
 	glColor4f(1, 1, 1, 1);
 
@@ -465,6 +467,23 @@ void Screen::renderDirtBackground(int unk)
 	t.vertexUV(0.0f,           float(m_height), 0, 0,                      float(unk) + float(m_height) / 32.0f);
 	t.vertexUV(float(m_width), float(m_height), 0, float(m_width) / 32.0f, float(unk) + float(m_height) / 32.0f);
 	t.vertexUV(float(m_width), 0,               0, float(m_width) / 32.0f, float(unk) + 0.0f);
+	t.vertexUV(0.0f,           0,               0, 0,                      float(unk) + 0.0f);
+	t.offset(0, 0, 0);
+	t.draw();
+	*/
+
+	// 0.7. - 0.7.3 background
+
+	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/titleBG.png");
+	glColor4f(1, 1, 1, 1);
+
+	Tesselator& t = Tesselator::instance;
+	t.begin();
+//	t.offset(0, m_yOffset, 0);
+//	t.color(0xffffff);
+	t.vertexUV(0.0f,           float(m_height), 0, 0,                      float(unk) + 1);
+	t.vertexUV(float(m_width), float(m_height), 0, 1, float(unk) + 1);
+	t.vertexUV(float(m_width), 0,               0, 1, float(unk) + 0.0f);
 	t.vertexUV(0.0f,           0,               0, 0,                      float(unk) + 0.0f);
 	t.offset(0, 0, 0);
 	t.draw();

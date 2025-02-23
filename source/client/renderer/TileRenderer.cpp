@@ -2417,7 +2417,7 @@ void TileRenderer::renderTile(Tile* tile, int data RENDER_TILE_ARG_PATCH)
 			SHADE_PREPARE;
 			SHADE_IF_NEEDED(1.0f);
 			renderFaceDown(tile, 0.0f, 0.0f, 0.0f, tile->getTexture(DIR_YPOS, data));
-			SHADE_FIXUP_GRASS;
+		//	SHADE_FIXUP_GRASS;
 			SHADE_IF_NEEDED(0.5f);
 			IF_NEEDED(renderFaceUp(tile, 0.0f, 0.0f, 0.0f, tile->getTexture(DIR_YNEG, data)));
 			SHADE_IF_NEEDED(0.8f);

@@ -112,7 +112,7 @@ void IngameBlockSelectionScreen::renderSlot(int index, int x, int y, float f)
 void IngameBlockSelectionScreen::renderSlots()
 {
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/gui.png");
+	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/spritesheet.png");
 
 	for (int y = 0; y != -22 * getSlotsHeight(); y -= 22)
 		blit(m_width / 2 - 182 / 2, m_height - 3 - getBottomY() + y, 0, 0, 182, 22, 0, 0);
