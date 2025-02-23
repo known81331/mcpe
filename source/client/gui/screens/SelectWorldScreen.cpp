@@ -15,9 +15,10 @@
 
 SelectWorldScreen::SelectWorldScreen() :
 	m_btnDelete   (1, "Delete"),
-	m_btnCreateNew(2, "Create new"),
-	m_btnBack     (3, "Back"),
-	m_btnUnknown  (4, ""),
+	m_btnCreateNew(2, "New"),
+	m_btnServer   (3, "Server"),
+	m_btnBack     (4, "Back"),
+	m_btnUnknown  (5, ""),
 	m_pWorldSelectionList(nullptr)
 {
 	m_btnDelete.m_bEnabled = false;
@@ -33,23 +34,26 @@ void SelectWorldScreen::init()
 	loadLevelSource();
 	m_pWorldSelectionList->commit();
 
-	m_btnDelete.m_yPos   = m_btnBack.m_yPos   = m_btnCreateNew.m_yPos    = m_height - 28;
-	m_btnDelete.m_width  = m_btnBack.m_width  = m_btnCreateNew.m_width  = 84;
-	m_btnDelete.m_height = m_btnBack.m_height = m_btnCreateNew.m_height = 24;
+	m_btnServer.m_yPos   = m_btnDelete.m_yPos   = m_btnBack.m_yPos   = m_btnCreateNew.m_yPos    = 4;
+	m_btnServer.m_width  = m_btnDelete.m_width  = m_btnBack.m_width  = m_btnCreateNew.m_width  = 48;
+	m_btnServer.m_height = m_btnDelete.m_height = m_btnBack.m_height = m_btnCreateNew.m_height = 20;
 
-	m_btnDelete.m_xPos    = m_width / 2 - 130;
-	m_btnCreateNew.m_xPos = m_width / 2 - 42;
-	m_btnBack.m_xPos      = m_width / 2 + 46;
+	m_btnServer.m_xPos = m_width - 156;
+	m_btnDelete.m_xPos    = m_width - 104;
+	m_btnCreateNew.m_xPos = m_width - 52;
+	m_btnBack.m_xPos      = 4;
 
 	m_buttons.push_back(&m_btnCreateNew);
 	m_buttons.push_back(&m_btnBack);
 	m_buttons.push_back(&m_btnDelete);
+	m_buttons.push_back(&m_btnServer);
 
 	field_12C = Mouse::getButtonState(BUTTON_LEFT);
 
 	m_buttonTabList.push_back(&m_btnUnknown);
 	m_buttonTabList.push_back(&m_btnDelete);
 	m_buttonTabList.push_back(&m_btnCreateNew);
+	m_buttonTabList.push_back(&m_btnServer);
 	m_buttonTabList.push_back(&m_btnBack);
 }
 
@@ -161,7 +165,7 @@ void SelectWorldScreen::tick()
 
 void SelectWorldScreen::render(int mouseX, int mouseY, float f)
 {
-	renderBackground();
+	renderDirtBackground(0); //renderBackground();
 #ifndef ORIGINAL_CODE
 	m_btnUnknown.field_36 = true;
 #endif
@@ -178,7 +182,7 @@ void SelectWorldScreen::render(int mouseX, int mouseY, float f)
 
 	Screen::render(mouseX, mouseY, f);
 
-	drawCenteredString(m_pMinecraft->m_pFont, "Select world", m_width / 2, 8, 0xFFFFFFFF);
+	drawCenteredString(m_pMinecraft->m_pFont, "Play", m_width / 2, 8, 0xFFFFFFFF);
 }
 
 bool SelectWorldScreen::handleBackEvent(bool b)
@@ -267,8 +271,8 @@ void SelectWorldScreen::loadLevelSource()
 	{
 		const LevelSummary& level = m_levels[i];
 
-		if (level.field_0 == "_LastJoinedServer")
-			continue;
+		//if (level.field_0 == "_LastJoinedServer")
+		//	continue;
 
 		m_pWorldSelectionList->m_items.push_back(level);
 	}

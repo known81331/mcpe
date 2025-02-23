@@ -52,10 +52,10 @@ public:
 
 public:
 	int m_selectedHotbarSlot;
-private:
-	Player* m_pPlayer;
 	bool m_bIsSurvival;
-
+	
+	Player* m_pPlayer;
 	int m_hotbar[C_MAX_HOTBAR_ITEMS];
 	std::vector<ItemInstance> m_items;
+
 };

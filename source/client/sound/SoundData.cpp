@@ -15,6 +15,6 @@
 // Check the readme for a guide on how to extract game sounds from the
 // Minecraft PE 0.1.3 .apk file.
 // --------------------------------------------------------------------
-#ifndef MISSING_SOUND_DATA
+#ifndef xMISSING_SOUND_DATA
 #include "../../sound_data/sounds.h"
 #endif

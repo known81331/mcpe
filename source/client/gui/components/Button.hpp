@@ -27,7 +27,7 @@ public:
 	int  getYImage(bool bHovered);
 	void released(int xPos, int yPos);
 	void renderBg(Minecraft*, int, int);
-	void render(Minecraft*, int xPos, int yPos);
+	virtual void render(Minecraft*, int xPos, int yPos);
 
 public:
 	int m_width;

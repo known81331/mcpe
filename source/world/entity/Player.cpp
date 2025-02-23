@@ -133,6 +133,19 @@ void Player::die(Entity* pCulprit)
 	}
 }
 
+
+void Player::dropDeathLoot()
+{
+	if (m_pInventory->m_bIsSurvival) {
+		for (int i = 0; i < C_NUM_SURVIVAL_SLOTS; i++)
+			if (m_pInventory->getItem(i) && m_pInventory->getItem(i)->getItem())
+				drop(m_pInventory->getItem(i), true);
+		m_pInventory->clear();
+		for (int i = 0; i < C_MAX_HOTBAR_ITEMS; i++)
+			m_pInventory->m_hotbar[i] = i;
+	}
+}
+
 void Player::aiStep()
 {
 	field_B9C = field_BA0;
@@ -248,6 +261,7 @@ void Player::displayClientMessage(const std::string& msg)
 void Player::drop(ItemInstance* pItemInstance)
 {
 	drop(pItemInstance, false);
+	pItemInstance->m_amount--;
 }
 
 void Player::drop(ItemInstance* pItemInstance, bool b)

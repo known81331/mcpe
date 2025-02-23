@@ -13,7 +13,7 @@
 #ifndef OLD_OPTIONS_SCREEN
 
 OptionsScreen::OptionsScreen() :
-	m_backButton(100, "Done"),
+	m_backButton(100, "Back"),
 	m_pList(nullptr)
 {
 }
@@ -28,14 +28,14 @@ void OptionsScreen::init()
 	if (m_pList)
 		SAFE_DELETE(m_pList);
 
-	m_pList = new OptionList(m_pMinecraft, m_width, m_height, 28, m_height - 28);
+	m_pList = new OptionList(m_pMinecraft, m_width, m_height, 24, m_height - 24);
 	m_pList->initDefaultMenu();
 
-	m_backButton.m_width = 100;
+	m_backButton.m_width = 48;
 	m_backButton.m_height = 20;
 
-	m_backButton.m_xPos = (m_width - m_backButton.m_width) / 2;
-	m_backButton.m_yPos = m_height - m_backButton.m_height - (28 - m_backButton.m_height) / 2;
+	m_backButton.m_xPos = 4; //(m_width - m_backButton.m_width) / 2;
+	m_backButton.m_yPos = 4; //m_height - m_backButton.m_height - (28 - m_backButton.m_height) / 2;
 
 	m_buttons.push_back(&m_backButton);
 	m_buttonTabList.push_back(&m_backButton);

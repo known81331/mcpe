@@ -10,6 +10,7 @@
 
 #include "../Screen.hpp"
 #include "client/renderer/TileRenderer.hpp"
+#include "../components/ImageButton.hpp"
 
 class StartMenuScreen;
 
@@ -62,7 +63,7 @@ protected:
 
 	Button m_startButton;
 	Button m_joinButton;
-	Button m_optionsButton;
+	ImageButton m_optionsButton;
 	Button m_testButton;
 	Button m_buyButton;
 	std::string field_154;

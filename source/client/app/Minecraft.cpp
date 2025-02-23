@@ -484,11 +484,23 @@ void Minecraft::tickInput()
 			}
 			else if (getOptions()->isKey(KM_DROP, keyCode))
 			{
-				int itemID = m_pLocalPlayer->m_pInventory->getSelectedItemId();
-				if (itemID > 0)
-				{
-					ItemInstance inst(itemID, 1, 0);
-					m_pLocalPlayer->drop(&inst);
+				if (m_pLocalPlayer->m_pInventory->m_bIsSurvival) {
+
+					auto* itemID = m_pLocalPlayer->m_pInventory->getSelectedItem();
+					if (itemID && itemID->getItem() && itemID->m_amount && itemID->m_itemID)
+					{
+						itemID->m_amount--;
+						ItemInstance inst(itemID->m_itemID, 1, 0);
+						m_pLocalPlayer->drop(&inst);
+					}
+				}
+				else {
+					int itemID = m_pLocalPlayer->m_pInventory->getSelectedItemId();
+					if (itemID > 0)
+					{
+						ItemInstance inst(itemID, 1, 0);
+						m_pLocalPlayer->drop(&inst);
+					}
 				}
 			}
 			else if (getOptions()->isKey(KM_TOGGLEGUI, keyCode))

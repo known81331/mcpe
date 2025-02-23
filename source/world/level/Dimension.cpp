@@ -29,19 +29,20 @@ Vec3 Dimension::getFogColor(float a, float b)
 
 	Vec3 v;
 	v.z = 1;
-
-	if (x2 <= 1.0f)
-	{
-		float p = (x2 * 0.94f) + 0.06f;
-		v.x = p * 0.75294f;
-		v.y = p * 0.84706f;
-		v.z = (x2 * 0.91f) + 0.09f;
-	}
-	else
-	{
-		v.x = 0.75294f;
-		v.y = 0.84706f;
-	}
+    
+    if (x2 <= 1.0f)
+    {
+        float p = (x2 * 0.94f) + 0.06f;
+        v.x = p * 0.5019608f;
+        v.y = p * 0.85490197;
+        v.z = (x2 * 0.91f) + 0.09f;
+    }
+    else
+    {
+        v.x = 0.5019608f;
+        v.y = 0.85490197;
+    }
+    
 
 	return v;
 }
@@ -54,12 +55,12 @@ float* Dimension::getSunriseColor(float a, float b)
 		return nullptr;
 
 	float x2 = x1 / 0.4f * 0.5f + 0.5f;
-	float x3 = 1.0f - Mth::sin(x2);
+	float x3 = 1.0f - ( 1.0f - Mth::sin(x2)) * 0.99;
 
 	m_sunriseColor[0] = x2 * 0.3f + 0.7f;
 	m_sunriseColor[1] = (x2 * x2) * 0.7f + 0.2f;
 	m_sunriseColor[2] = (x2 * x2) * 0.0f + 0.2f; //@BUG: useless multiplication by 0?
-	m_sunriseColor[3] = ((x3 * -0.99f) + 1.0f) * ((x3 * -0.99f) + 1.0f);
+	m_sunriseColor[3] = x3 * x3; //((x3 * -0.99f) + 1.0f) * ((x3 * -0.99f) + 1.0f);
 
 	return m_sunriseColor;
 }
@@ -99,7 +100,7 @@ void Dimension::updateLightRamp()
 #else
 		// @NOTE: Adjusted calculation causes full bright tiles to render at 80% brightness.
 		// This was probably done so that highlighted tiles don't have their brightness blown up and the texture doesn't look weird.
-		m_rotY[i] = ((1.0f - ((i * -0.0625f) + 1.0f)) / ((((i * -0.0625f) + 1.0f) * 3.0f) + 1.0f)) * 0.95f + 0.05f;
+		field_10[i] = ((1.0f - ((i * -0.0625f) + 1.0f)) / ((((i * -0.0625f) + 1.0f) * 3.0f) + 1.0f)) * 0.95f + 0.05f;
 #endif
 	}
 }

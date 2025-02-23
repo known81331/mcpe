@@ -25,6 +25,8 @@ struct PlayerData
 	short field_26;
 	bool field_28;
 	int m_hotbar[C_MAX_HOTBAR_ITEMS];
+	// todo: move to a proper container
+	ItemInstance m_items[C_NUM_SURVIVAL_SLOTS];
 
 	void loadPlayer(Player* player);
 	void savePlayer(Player* player);

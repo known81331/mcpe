@@ -146,7 +146,7 @@ void CreativeMode::render(float f)
 
 void CreativeMode::initPlayer(Player* p)
 {
-	p->m_yaw = -180.0f;
+	//p->m_yaw = -180.0f;
 	p->m_pInventory->prepareCreativeInventory();
 }
 

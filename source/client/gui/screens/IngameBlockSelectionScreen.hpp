@@ -9,6 +9,7 @@
 #pragma once
 
 #include "../Screen.hpp"
+#include "../components/ImageButton.hpp"
 
 class Inventory;
 
@@ -38,6 +39,8 @@ public:
 
 private:
 	int m_selectedSlot;
-    Button m_btnPause;
+    ImageButton m_btnPause;
+    Button m_btnCrafting;
+    Button m_btnArmor;
 };
 

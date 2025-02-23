@@ -87,8 +87,11 @@ void Inventory::prepareCreativeInventory()
 void Inventory::prepareSurvivalInventory()
 {
 	m_bIsSurvival = true;
-	m_items.clear();
 	m_items.resize(C_NUM_SURVIVAL_SLOTS);
+	
+	// why do you do that? keep our inventory instead	
+/*
+	m_items.clear();
 
 	// Add some items for testing
 	addTestItem(Item::stick->m_itemID, 64);
@@ -98,6 +101,7 @@ void Inventory::prepareSurvivalInventory()
 	addTestItem(Tile::ladder->m_ID, 64);
 	addTestItem(Tile::obsidian->m_ID, 64);
 	addTestItem(Tile::fire->m_ID, 64);
+*/
 
 	for (int i = 0; i < C_MAX_HOTBAR_ITEMS; i++)
 		m_hotbar[i] = i;
@@ -168,6 +172,7 @@ void Inventory::addItem(ItemInstance* pInst)
 	if (!pInst->m_amount)
 		return;
 
+	int fi = 0;
 	// try to add it to an empty slot
 	for (int i = 0; i < getNumItems(); i++)
 	{
@@ -175,9 +180,29 @@ void Inventory::addItem(ItemInstance* pInst)
 			continue;
 
 		m_items[i] = *pInst;
+		fi = i;
 		pInst->m_amount = 0;
+
+
+		if (m_bIsSurvival) {
+			for (int i = 0; i < getNumSlots(); i++) {
+				auto* item = getQuickSlotItem(i);
+				if (item && item->m_itemID == pInst->m_itemID && item->m_amount < item->getMaxStackSize() )
+					return;
+			}
+
+			for (int i = 0; i < getNumSlots(); i++) {
+				auto* item = getQuickSlotItem(i);
+				if (!item || item && ( item->m_itemID == -1 || item->m_itemID == 0 || item->m_amount == 0) ) {
+					m_hotbar[i] = fi; //setQuickSlotIndexByItemId(i, pInst->m_itemID);
+					break;
+				}
+			}
+		}
+		
 		return;
 	}
+
 }
 
 void Inventory::addTestItem(int itemID, int amount, int auxValue)
@@ -251,16 +276,18 @@ void Inventory::selectItem(int slotNo, int maxHotBarSlot)
 	{
 		if (m_hotbar[i] == slotNo)
 		{
-			m_selectedHotbarSlot = i;
-			return;
+			//m_selectedHotbarSlot = i;
+			m_hotbar[i] = m_hotbar[m_selectedHotbarSlot];
+			//return;
 		}
 	}
 
-	for (int i = maxHotBarSlot - 2; i >= 0; i--)
-		m_hotbar[i + 1] = m_hotbar[i];
+	m_hotbar[m_selectedHotbarSlot] = slotNo;
+	//for (int i = maxHotBarSlot - 2; i >= 0; i--)
+	//	m_hotbar[i + 1] = m_hotbar[i];
 
-	m_hotbar[0] = slotNo;
-	m_selectedHotbarSlot = 0;
+	//m_hotbar[0] = slotNo;
+	//m_selectedHotbarSlot = 0;
 }
 
 void Inventory::selectSlot(int slotNo)
@@ -276,8 +303,10 @@ void Inventory::setQuickSlotIndexByItemId(int slotNo, int itemID)
 	if (slotNo < 0 || slotNo >= C_MAX_HOTBAR_ITEMS)
 		return;
 
-	if (m_bIsSurvival)
-		return; // TODO
+	if (m_bIsSurvival) {
+		printf("slot %d %d\n", slotNo, itemID);
+		//return; // TODO
+	}
 
 	for (int i = 0; i < getNumItems(); i++)
 	{

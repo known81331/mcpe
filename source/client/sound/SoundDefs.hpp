@@ -11,7 +11,7 @@
 
 // These are defined in SoundData.cpp, if MISSING_SOUND_DATA isn't declared.
 
-#ifndef MISSING_SOUND_DATA
+#ifndef xMISSING_SOUND_DATA
 
 extern SoundDesc SA_cloth1;
 extern SoundDesc SA_cloth2;

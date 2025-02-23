@@ -214,27 +214,39 @@ void OptionList::renderItem(int index, int x, int y, int height, Tesselator& t)
 
 void OptionList::renderBackground(float f)
 {
+	//if (!m_pMinecraft->isLevelGenerated())
+	//	m_pMinecraft->m_pScreen->renderMenuBackground(f);
+
+
 	if (!m_pMinecraft->isLevelGenerated())
-		m_pMinecraft->m_pScreen->renderMenuBackground(f);
+		m_pMinecraft->m_pScreen->renderDirtBackground(0);
+		// draw the background offset by the Y offset so that the smaller virtual
+		// keyboards don't reveal undrawn areas
+		fillGradient(0, 0, Minecraft::width, Minecraft::height, 0xC0101010, 0xD0101010);
 }
 
 void OptionList::renderHoleBackground(float a, float b, int c, int d)
 {
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable(GL_TEXTURE_2D);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glDisable(GL_TEXTURE_2D);
+//
+	//Tesselator& t = Tesselator::instance;
+	//t.begin();
+	//t.color(0x202020, 0xC0);
+	//t.vertexUV(0.0f, b, 0.0f, 0.0f, b / 32.0f);
+	//t.vertexUV(float(field_18), b, 0.0f, field_18 / 32.0f, b / 32.0f);
+	//t.vertexUV(float(field_18), a, 0.0f, field_18 / 32.0f, a / 32.0f);
+	//t.vertexUV(0.0f, a, 0.0f, 0.0f, a / 32.0f);
+	//t.draw();
+//
+	//glEnable(GL_TEXTURE_2D);
+	//glDisable(GL_BLEND);
 
-	Tesselator& t = Tesselator::instance;
-	t.begin();
-	t.color(0x202020, 0xC0);
-	t.vertexUV(0.0f, b, 0.0f, 0.0f, b / 32.0f);
-	t.vertexUV(float(field_18), b, 0.0f, field_18 / 32.0f, b / 32.0f);
-	t.vertexUV(float(field_18), a, 0.0f, field_18 / 32.0f, a / 32.0f);
-	t.vertexUV(0.0f, a, 0.0f, 0.0f, a / 32.0f);
-	t.draw();
+	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/touchgui.png");
 
-	glEnable(GL_TEXTURE_2D);
-	glDisable(GL_BLEND);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	blit(0, 0, 148, 26, m_pMinecraft->width, 26, 2, 26);
 }
 
 void OptionList::renderScrollBackground()

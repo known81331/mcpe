@@ -1241,18 +1241,19 @@ Vec3 Level::getSkyColor(Entity* pEnt, float f)
 	result.z = 2 * fTODCosAng + 0.5f;
 	if (result.z < 0.0f)
 		result.z = 0.0f;
-	if (result.z > 1.0f)
-		result.z = 1.0f;
+	if (result.z > 0.75f)
+		result.z = 0.75f;
 
 	// @NOTE: Unused result. In JE, it tries to get the biome that the player is standing in.
 	Mth::floor(pEnt->m_pos.x);
 	Mth::floor(pEnt->m_pos.z);
 
-	result.x = result.z * 0.6f;
-	result.y = result.x;
+	result.x = result.z * 0.1882353f;
+	result.y = result.z * 0.4392157f;
 
 	return result;
 }
+
 
 Vec3 Level::getFogColor(float f)
 {

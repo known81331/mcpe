@@ -28,7 +28,7 @@ void RocketRenderer::render(Entity* entity, float x, float y, float z, float a, 
 	bindTexture("gui/items.png");
 	t.begin();
 
-	m_renderer.renderTile(&m_tile, 0);
+	//m_renderer.renderTile(&m_tile, 0);
 	t.draw();
 
 	glPopMatrix();

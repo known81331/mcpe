@@ -166,17 +166,17 @@ _done:
 	glDisable(GL_LIGHTING);
 	glDisable(GL_FOG);
 
-	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/background.png");
+	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/spritesheet.png");
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 	Tesselator& t = Tesselator::instance;
-	t.begin();
-	t.color(0x202020);
-	t.vertexUV(field_C,  field_24, 0.0f, (field_C  + float(int(field_30))) / 32.0f, field_24 / 32.0f);
-	t.vertexUV(field_10, field_24, 0.0f, (field_10 + float(int(field_30))) / 32.0f, field_24 / 32.0f);
-	t.vertexUV(field_10, field_20, 0.0f, (field_10 + float(int(field_30))) / 32.0f, field_20 / 32.0f);
-	t.vertexUV(field_C,  field_20, 0.0f, (field_C  + float(int(field_30))) / 32.0f, field_20 / 32.0f);
-	t.draw();
+	//t.begin();
+	//t.color(0x202020);
+	//t.vertexUV(field_C,  field_24, 0.0f, (field_C  + float(int(field_30))) / 32.0f, field_24 / 32.0f);
+	//t.vertexUV(field_10, field_24, 0.0f, (field_10 + float(int(field_30))) / 32.0f, field_24 / 32.0f);
+	//t.vertexUV(field_10, field_20, 0.0f, (field_10 + float(int(field_30))) / 32.0f, field_20 / 32.0f);
+	//t.vertexUV(field_C,  field_20, 0.0f, (field_C  + float(int(field_30))) / 32.0f, field_20 / 32.0f);
+	//t.draw();
 
 	if (!getNumberOfItems())
 		field_30 = 0.0f;
@@ -224,7 +224,7 @@ _done:
 	glDisable(GL_DEPTH_TEST);
 
 	renderHoleBackground(0.0f, field_20, 255, 255);
-	renderHoleBackground(field_24, float(field_1C), 255, 255);
+	//renderHoleBackground(field_24, float(field_1C), 255, 255);
 	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -253,23 +253,23 @@ _done:
 	t.vertexUV(field_20, m_rotY - 4.0f, 0.0f, 0.0f, 0.0f);
 	t.draw();
 #else
-	t.begin();
-	t.color(0, 0);
-	t.vertexUV(field_C + 4.0f, field_20, 0.0f, 0.0f, 1.0f);
-	t.vertexUV(field_C + 4.0f, field_24, 0.0f, 1.0f, 1.0f);
-	t.color(0, 255);
-	t.vertexUV(field_C, field_24, 0.0f, 1.0f, 0.0f);
-	t.vertexUV(field_C, field_20, 0.0f, 0.0f, 0.0f);
-	t.draw();
+	// t.begin();
+	// t.color(0, 0);
+	// t.vertexUV(field_C + 4.0f, field_20, 0.0f, 0.0f, 1.0f);
+	// t.vertexUV(field_C + 4.0f, field_24, 0.0f, 1.0f, 1.0f);
+	// t.color(0, 255);
+	// t.vertexUV(field_C, field_24, 0.0f, 1.0f, 0.0f);
+	// t.vertexUV(field_C, field_20, 0.0f, 0.0f, 0.0f);
+	// t.draw();
 
-	t.begin();
-	t.color(0, 255);
-	t.vertexUV(field_10, field_20, 0.0f, 0.0f, 1.0f);
-	t.vertexUV(field_10, field_24, 0.0f, 1.0f, 1.0f);
-	t.color(0, 0);
-	t.vertexUV(field_10 - 4.0f, field_24, 0.0f, 1.0f, 0.0f);
-	t.vertexUV(field_10 - 4.0f, field_20, 0.0f, 0.0f, 0.0f);
-	t.draw();
+	// t.begin();
+	// t.color(0, 255);
+	// t.vertexUV(field_10, field_20, 0.0f, 0.0f, 1.0f);
+	// t.vertexUV(field_10, field_24, 0.0f, 1.0f, 1.0f);
+	// t.color(0, 0);
+	// t.vertexUV(field_10 - 4.0f, field_24, 0.0f, 1.0f, 0.0f);
+	// t.vertexUV(field_10 - 4.0f, field_20, 0.0f, 0.0f, 0.0f);
+	// t.draw();
 #endif
 	
 	renderDecorations(mouseX, mouseY);
@@ -283,18 +283,48 @@ _done:
 
 void RolledSelectionList::renderHoleBackground(float y1, float y2, int a, int b)
 {
-	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/background.png");
+	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/touchgui.png");
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 	Tesselator& t = Tesselator::instance;
+	//t.begin();
+	//t.color(0xffffff, b);
+	//t.vertexUV(0.0f, y2, 0.0f, 0.0f, y2 / 32.0f);
+	//t.vertexUV(float(field_18), y2, 0.0f, float(field_18) / 32.0f, y2 / 32.0f);
+	//t.color(0xffffff, a);
+	//t.vertexUV(float(field_18), y1, 0.0f, float(field_18) / 32.0f, y1 / 32.0f);
+	//t.vertexUV(0.0f, y1, 0.0f, 0.0f, y1 / 32.0f);
+	//t.draw();
+
+
+	blit(0, 0, 148, 26, m_pMinecraft->width, 26, 2, 26);
+	
+
+
+	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/background.png");
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_ALPHA_TEST);
+	glShadeModel(GL_SMOOTH);
+	glDisable(GL_TEXTURE_2D);
+
 	t.begin();
-	t.color(0x505050, b);
-	t.vertexUV(0.0f, y2, 0.0f, 0.0f, y2 / 32.0f);
-	t.vertexUV(float(field_18), y2, 0.0f, float(field_18) / 32.0f, y2 / 32.0f);
-	t.color(0x505050, a);
-	t.vertexUV(float(field_18), y1, 0.0f, float(field_18) / 32.0f, y1 / 32.0f);
-	t.vertexUV(0.0f, y1, 0.0f, 0.0f, y1 / 32.0f);
+	t.color(0, 0);
+	t.vertexUV(0, 30, 0.0f, 0.0f, 1.0f);
+	t.vertexUV(m_pMinecraft->width, 30, 0.0f, 1.0f, 1.0f);
+	t.color(0, 255);
+	t.vertexUV(0, 26, 0.0f, 1.0f, 0.0f);
+	t.vertexUV(m_pMinecraft->width, 26, 0.0f, 0.0f, 0.0f);
 	t.draw();
+
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
+	glShadeModel(GL_FLAT);
+	glEnable(GL_ALPHA_TEST);
+	glDisable(GL_BLEND);
+
 }
 
 void RolledSelectionList::setRenderSelection(bool b)

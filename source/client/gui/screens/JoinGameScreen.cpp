@@ -12,8 +12,8 @@
 #include "StartMenuScreen.hpp"
 
 JoinGameScreen::JoinGameScreen() :
-	m_btnJoin(2, "Join Game"),
-	m_btnDirectConnect(3, "Direct Connect"),
+	m_btnJoin(2, "Join"),
+	m_btnDirectConnect(3, "Direct"),
 	m_btnBack(4, "Back"),
 	m_pAvailableGamesList(nullptr)
 {
@@ -63,16 +63,21 @@ bool JoinGameScreen::handleBackEvent(bool b)
 
 void JoinGameScreen::init()
 {
-	const int BUTTON_WIDTH = 84;
+	const int BUTTON_WIDTH = 48;
 
-	m_btnBack.m_yPos = m_btnJoin.m_yPos = m_btnDirectConnect.m_yPos = m_height - 27;
+	m_btnBack.m_yPos = m_btnJoin.m_yPos = m_btnDirectConnect.m_yPos = 4;
 	m_btnBack.m_width = m_btnJoin.m_width = BUTTON_WIDTH;
 
 	m_btnJoin.m_xPos = m_width / 2 - (BUTTON_WIDTH + (BUTTON_WIDTH / 2)) - 4;
 	m_btnDirectConnect.m_xPos = (m_width / 2) - (BUTTON_WIDTH / 2);
-	m_btnBack.m_xPos = m_width / 2 + 4 + (BUTTON_WIDTH / 2);
+	m_btnBack.m_xPos = 4; //m_width / 2 + 4 + (BUTTON_WIDTH / 2);
+
+	m_btnDirectConnect.m_height = m_btnJoin.m_height = m_btnBack.m_height = 20;
 
 	m_btnDirectConnect.m_width = BUTTON_WIDTH;
+
+	m_btnDirectConnect.m_xPos    = m_width - 104;
+	m_btnJoin.m_xPos = m_width - 52;
 
 	m_buttons.push_back(&m_btnJoin);
 	m_buttons.push_back(&m_btnDirectConnect);

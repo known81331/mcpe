@@ -88,8 +88,8 @@ void ScrolledSelectionList::renderScrollBackground()
 	Tesselator& t = Tesselator::instance;
 	t.begin();
 	t.color(0x202020);
-	t.vertexUV(field_24, field_10, 0.0f, field_24 / 32.0f, (field_10 + float(int(field_34))) / 32.0f);
-	t.vertexUV(field_20, field_10, 0.0f, field_20 / 32.0f, (field_10 + float(int(field_34))) / 32.0f);
+	t.vertexUV(field_24, m_pMinecraft->height, 0.0f, field_24 / 32.0f, (m_pMinecraft->height + float(int(field_34))) / 32.0f);
+	t.vertexUV(field_20, m_pMinecraft->height, 0.0f, field_20 / 32.0f, (m_pMinecraft->height + float(int(field_34))) / 32.0f);
 	t.vertexUV(field_20, field_C,  0.0f, field_20 / 32.0f, (field_C  + float(int(field_34))) / 32.0f);
 	t.vertexUV(field_24, field_C,  0.0f, field_24 / 32.0f, (field_C  + float(int(field_34))) / 32.0f);
 	t.draw();
@@ -150,7 +150,8 @@ void ScrolledSelectionList::checkInput(int mouseX, int mouseY)
 
 void ScrolledSelectionList::render(int mouseX, int mouseY, float f)
 {
-	renderBackground(f);
+	renderBackground(0);
+
 
 	int nItems = getNumberOfItems();
 	Tesselator& t = Tesselator::instance;
@@ -167,7 +168,7 @@ void ScrolledSelectionList::render(int mouseX, int mouseY, float f)
 	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/background.png");
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-	renderScrollBackground();
+	//renderScrollBackground();
 
 	int itemX = field_18 / 2 - (C_ITEM_WIDTH - 4) / 2;
 	int scrollY = int(field_C + 4 - float(int(field_34)));
@@ -178,14 +179,14 @@ void ScrolledSelectionList::render(int mouseX, int mouseY, float f)
 	// Note, X/Y are the lower left's X/Y coordinates, not the upper left's.
 	int lowerY = Minecraft::height - int(field_10 / Gui::InvGuiScale);
 	int upperY = Minecraft::height - int(field_C  / Gui::InvGuiScale);
-	glScissor(0, lowerY, Minecraft::width, upperY - lowerY);
+	glScissor(0, 0, Minecraft::width, Minecraft::height);
 	glEnable(GL_SCISSOR_TEST);
 
 	for (int i = 0; i < nItems; i++)
 	{
 		float itemY = float(field_48 + scrollY + i * m_itemHeight);
-		if (field_10 < itemY)
-			continue;
+		//if (field_10 < itemY)
+		//	continue;
 
 		float lowerY = itemY + m_itemHeight - 4;
 		if (lowerY < field_C)
@@ -217,7 +218,7 @@ void ScrolledSelectionList::render(int mouseX, int mouseY, float f)
 	glDisable(GL_DEPTH_TEST);
 
 	renderHoleBackground(0.0f, field_C, 255, 255);
-	renderHoleBackground(field_10, float(field_1C), 255, 255);
+	//renderHoleBackground(field_10, float(field_1C), 255, 255);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -227,21 +228,21 @@ void ScrolledSelectionList::render(int mouseX, int mouseY, float f)
 
 	t.begin();
 	t.color(0, 0);
-	t.vertexUV(field_24, field_C + 4.0f, 0.0f, 0.0f, 1.0f);
-	t.vertexUV(field_20, field_C + 4.0f, 0.0f, 1.0f, 1.0f);
+	t.vertexUV(field_24, field_C + 6.0f, 0.0f, 0.0f, 1.0f);
+	t.vertexUV(field_20, field_C + 6.0f, 0.0f, 1.0f, 1.0f);
 	t.color(0, 255);
-	t.vertexUV(field_20, field_C, 0.0f, 1.0f, 0.0f);
-	t.vertexUV(field_24, field_C, 0.0f, 0.0f, 0.0f);
+	t.vertexUV(field_20, field_C + 2.0f, 0.0f, 1.0f, 0.0f);
+	t.vertexUV(field_24, field_C + 2.0f, 0.0f, 0.0f, 0.0f);
 	t.draw();
 
-	t.begin();
-	t.color(0, 255);
-	t.vertexUV(field_24, field_10, 0.0f, 0.0f, 1.0f);
-	t.vertexUV(field_20, field_10, 0.0f, 1.0f, 1.0f);
-	t.color(0, 0);
-	t.vertexUV(field_20, field_10 - 4.0f, 0.0f, 1.0f, 0.0f);
-	t.vertexUV(field_24, field_10 - 4.0f, 0.0f, 0.0f, 0.0f);
-	t.draw();
+	//t.begin();
+	//t.color(0, 255);
+	//t.vertexUV(field_24, field_10, 0.0f, 0.0f, 1.0f);
+	//t.vertexUV(field_20, field_10, 0.0f, 1.0f, 1.0f);
+	//t.color(0, 0);
+	//t.vertexUV(field_20, field_10 - 4.0f, 0.0f, 1.0f, 0.0f);
+	//t.vertexUV(field_24, field_10 - 4.0f, 0.0f, 0.0f, 0.0f);
+	//t.draw();
 
 	renderDecorations(mouseX, mouseY);
 
@@ -254,19 +255,22 @@ void ScrolledSelectionList::render(int mouseX, int mouseY, float f)
 
 void ScrolledSelectionList::renderHoleBackground(float a, float b, int c, int d)
 {
-	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/background.png");
+	m_pMinecraft->m_pTextures->loadAndBindTexture("gui/touchgui.png");
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-	Tesselator& t = Tesselator::instance;
-	t.begin();
-	t.color(0x505050, d);
-	t.vertexUV(0.0f,            b, 0.0f, 0.0f,             b / 32.0f);
-	t.vertexUV(float(field_18), b, 0.0f, field_18 / 32.0f, b / 32.0f);
-	t.color(0x505050, c);
-	t.vertexUV(float(field_18), a, 0.0f, field_18 / 32.0f, a / 32.0f);
-	t.vertexUV(0.0f,            a, 0.0f, 0.0f,             a / 32.0f);
-	t.draw();
+	//Tesselator& t = Tesselator::instance;
+	//t.begin();
+	//t.color(0x505050, d);
+	//t.vertexUV(0.0f,            b, 0.0f, 0.0f,             b / 32.0f);
+	//t.vertexUV(float(field_18), b, 0.0f, field_18 / 32.0f, b / 32.0f);
+	//t.color(0x505050, c);
+	//t.vertexUV(float(field_18), a, 0.0f, field_18 / 32.0f, a / 32.0f);
+	//t.vertexUV(0.0f,            a, 0.0f, 0.0f,             a / 32.0f);
+	//t.draw();
+
+
+	blit(0, 0, 148, 26, m_pMinecraft->width, 26, 2, 26);
 }
 
 void ScrolledSelectionList::setRenderHeader(bool b, int i)

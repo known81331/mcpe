@@ -64,6 +64,7 @@ public:
 	void swing();
 	void take(Entity* pEnt, int x);
 	void touch(Entity* pEnt);
+	void dropDeathLoot();
 
 	// QUIRK: Yes, I did mean it like that, as did Mojang.
 #pragma GCC diagnostic push

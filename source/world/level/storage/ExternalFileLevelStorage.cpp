@@ -84,7 +84,7 @@ void ExternalFileLevelStorage::savePlayerData(LevelData* levelData, std::vector<
 	int nPlayers = 1;
 	fwrite(&nPlayers, sizeof nPlayers, 1, pFile);
 
-	int nSizePD = 80;
+	int nSizePD = sizeof(PlayerData) * nPlayers;
 	fwrite(&nSizePD,  sizeof nSizePD, 1, pFile);
 
 	// @NOTE: No reason to swap elementCount and elementSize here. I understood it the

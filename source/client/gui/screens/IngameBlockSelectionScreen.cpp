@@ -14,7 +14,13 @@
 std::string g_sNotAvailableInDemoVersion = "Not available in the demo version";
 
 IngameBlockSelectionScreen::IngameBlockSelectionScreen() :
-	m_btnPause(0, "Pause")
+	m_btnPause(0, "", {
+		120, 0, 36, 36, 0, 0,
+		156, 0, 36, 36, 0, 0,
+		"gui/spritesheet.png"
+	}),
+	m_btnArmor(1, "Armor"),
+	m_btnCrafting(2, "Craft")
 {
 	m_selectedSlot = 0;
 }
@@ -71,13 +77,24 @@ bool IngameBlockSelectionScreen::isAllowed(int slot)
 
 void IngameBlockSelectionScreen::init()
 {
-	m_btnPause.m_width = 40;
-	m_btnPause.m_xPos = 0;
+	m_btnPause.m_width = m_btnPause.m_height = 19;
+	m_btnPause.m_xPos = m_width-19;
 	m_btnPause.m_yPos = 0;
-#if TARGET_OS_IPHONE != 0
-	if (m_pMinecraft->isTouchscreen())
+	
+	m_btnCrafting.m_width = 40;
+	m_btnCrafting.m_xPos = 0; //m_pMinecraft->width-40;
+	m_btnCrafting.m_yPos = 0;
+
+	m_btnArmor.m_width = 40;
+	m_btnArmor.m_xPos = 40; //m_pMinecraft->width-80;
+	m_btnArmor.m_yPos = 0;
+//#if TARGET_OS_IPHONE != 0
+//	if (m_pMinecraft->isTouchscreen())
 		m_buttons.push_back(&m_btnPause);
-#endif
+//#endif
+
+	m_buttons.push_back(&m_btnCrafting);
+	m_buttons.push_back(&m_btnArmor);
 	
 	Inventory* pInv = getInventory();
 
@@ -143,7 +160,6 @@ void IngameBlockSelectionScreen::renderDemoOverlay()
 
 void IngameBlockSelectionScreen::render(int x, int y, float f)
 {
-	Screen::render(x, y, f);
 	glDisable(GL_DEPTH_TEST);
 
 	fill(0, 0, m_width, m_height, 0x80000000);
@@ -154,6 +170,7 @@ void IngameBlockSelectionScreen::render(int x, int y, float f)
 #ifdef DEMO
 	renderDemoOverlay();
 #endif
+	Screen::render(x, y, f);
 
 	glEnable(GL_DEPTH_TEST);
 }
@@ -161,7 +178,8 @@ void IngameBlockSelectionScreen::render(int x, int y, float f)
 void IngameBlockSelectionScreen::buttonClicked(Button* pButton)
 {
 	if (pButton->m_buttonId == m_btnPause.m_buttonId)
-		m_pMinecraft->setScreen(new PauseScreen);
+	//	m_pMinecraft->setScreen(new PauseScreen);
+		m_pMinecraft->setScreen(nullptr);
 }
 
 void IngameBlockSelectionScreen::mouseClicked(int x, int y, int type)

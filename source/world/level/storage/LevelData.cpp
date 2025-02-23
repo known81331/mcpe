@@ -76,10 +76,23 @@ void PlayerData::loadPlayer(Player* player)
 	// @NOTE: Why are we updating m_pos, field_3C and field_98 above if we do this?
 	player->setPos(m_pos.x, m_pos.y, m_pos.z);
 
+	if (player->m_pInventory->m_bIsSurvival) {
+		for (int i = 0; i < C_NUM_SURVIVAL_SLOTS; i++) {
+			printf("Loading %s %d \n",  m_items[i].getItem() ? m_items[i].getItem()->getName().data() : "Nothing", m_items[i].m_amount);
+		//	player->m_pInventory->m_items.push_back(m_items[i]);
+			if (m_items[i].getItem())
+				player->m_pInventory->m_items[i] = (m_items[i]); //player->m_pInventory->addItem(&m_items[i]);
+		}
+	}
+
 	// TODO: survival mode stuff
-	for (int i = 0; i < C_MAX_HOTBAR_ITEMS; i++)
-		player->m_pInventory->setQuickSlotIndexByItemId(i, m_hotbar[i]);
+	for (int i = 0; i < C_MAX_HOTBAR_ITEMS; i++) {
+		player->m_pInventory->m_hotbar[i] = m_hotbar[i];
+		auto* item = player->m_pInventory->getQuickSlotItem(i);
+		printf("slot %d %d %d %d\n", i, m_hotbar[i], player->m_pInventory->getQuickSlotItemId(m_hotbar[i]), item ? item->m_amount : 0 );
+	}
 }
+	
 
 void PlayerData::savePlayer(Player* player)
 {
@@ -92,7 +105,21 @@ void PlayerData::savePlayer(Player* player)
 	field_26 = player->field_BC;
 	field_28 = player->field_7C;
 
+	if (player->m_pInventory->m_bIsSurvival) {
+		for (int i = 0; i < C_NUM_SURVIVAL_SLOTS; i++) {
+			if (i < player->m_pInventory->m_items.size()) {
+				printf("Saving %s %d \n", m_items[i].getItem() ? m_items[i].getItem()->getName().data() : "Nothing", m_items[i].m_amount);
+				m_items[i] = player->m_pInventory->m_items[i];
+			}
+		}
+	}
+	
 	// TODO: survival mode stuff
-	for (int i = 0; i < C_MAX_HOTBAR_ITEMS; i++)
-		m_hotbar[i] = player->m_pInventory->getQuickSlotItemId(i);
+	for (int i = 0; i < C_MAX_HOTBAR_ITEMS; i++) {
+		m_hotbar[i] = player->m_pInventory->m_hotbar[i];
+		auto* item = player->m_pInventory->getQuickSlotItem(i);
+		printf("slot %d %d %d %d\n", i, m_hotbar[i], player->m_pInventory->getQuickSlotItemId(m_hotbar[i]), item ? item->m_amount : 0 );
+	}
+		// player->m_pInventory->m_hotbar[i]; 
+
 }

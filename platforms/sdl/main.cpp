@@ -385,7 +385,7 @@ int main(int argc, char *argv[])
 #else
 	storagePath = getenv("HOME");
 #endif
-	storagePath += "/.reminecraftpe";
+	storagePath += "/minecraftpe";
 	
 	if (!storagePath.empty())
 		createFolderIfNotExists(storagePath.c_str());

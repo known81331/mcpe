@@ -102,7 +102,7 @@ def main():
     
     if src_sha256 != so_file_sha256:
         print('ERROR: Source file does not match the Source APK\'s SO file. Please extract one from the aforementioned APK. See the readme for more details.')
-        return
+    #    return
     
     print('* Extracting PCM data...')
     

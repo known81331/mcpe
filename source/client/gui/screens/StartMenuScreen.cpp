@@ -353,7 +353,15 @@ const char* gSplashes[] =
 StartMenuScreen::StartMenuScreen() :
 	m_startButton  (2,   0, 0, 110, 32, "Play"),
 	m_joinButton   (3,   0, 0, 160, 32, "Join Game"),
-	m_optionsButton(4,   0, 0,  40, 40, "Options"),
+	m_optionsButton(4, "", {
+		// 0.6.x button preset
+		//0, 26, 75, 75,
+		//75, 26, 75, 75,
+
+		218, 0, 27, 27, 4, 6,
+		218, 0, 27, 27, 4, 6,
+		"gui/touchgui.png"
+	} ),//   0, 0,  40, 40, "Options"),
 	m_testButton   (999, 0, 0,  78, 22, "Test"),
 	m_buyButton    (5,   0, 0,  78, 22, "Buy")
 {
@@ -452,11 +460,13 @@ void StartMenuScreen::init()
 	m_buyButton.m_xPos = x1 / 2 + m_optionsButton.m_width + 4;
 	m_testButton.m_xPos = x1 / 2 + m_optionsButton.m_width + 4;
 
+	m_optionsButton.m_width = m_optionsButton.m_height = 40;
+
 	// add the buttons to the screen:
 	m_buttons.push_back(&m_startButton);
 	m_buttonTabList.push_back(&m_startButton);
-	//m_buttons.push_back(&m_joinButton);
-	//m_buttonTabList.push_back(&m_joinButton);
+	m_buttons.push_back(&m_joinButton);
+	m_buttonTabList.push_back(&m_joinButton);
 	m_buttons.push_back(&m_optionsButton);
 	m_buttonTabList.push_back(&m_optionsButton);
 
@@ -680,7 +690,7 @@ void StartMenuScreen::draw3dTitle(float f)
 
 				// rotate 90 deg on the X axis to correct lighting
 				glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-				m_tileRenderer.renderTile(pTile, i == 0 ? 999 : 0);
+			//	m_tileRenderer.renderTile(pTile, i == 0 ? 999 : 0);
 
 				glPopMatrix();
 			}

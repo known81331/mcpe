@@ -32,6 +32,7 @@ public:
 	Button m_btnDelete;
 	Button m_btnCreateNew;
 	Button m_btnBack;
+	Button m_btnServer;
 	Button m_btnUnknown;
 	WorldSelectionList* m_pWorldSelectionList;
 	std::vector<LevelSummary> m_levels;
