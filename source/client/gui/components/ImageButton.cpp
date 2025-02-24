@@ -38,6 +38,13 @@ Button(buttonId, xPos, yPos, btnWidth, btnHeight, text)
 	m_height = btnHeight;
 }
 
+ImageButton::ImageButton():
+Button(0, 0, 0, 0, 0, "")
+{
+	_init();
+}
+
+
 ImageButton::ImageButton(int buttonId, int xPos, int yPos, const std::string& text):
 Button(buttonId, xPos, yPos, text)
 {
@@ -136,6 +143,7 @@ void ImageButton::render(Minecraft* pMinecraft, int xPos, int yPos)
 	if (!m_bVisible) return;
 
 #ifdef ENH_HIGHLIGHT_BY_HOVER
+if (m_bHoverable)
 	field_36 = clicked(pMinecraft, xPos, yPos);
 #endif
 

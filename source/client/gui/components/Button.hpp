@@ -39,6 +39,7 @@ public:
 	bool m_bEnabled;
 	bool m_bVisible;
 	bool field_36;
+	bool m_bHoverable;
 
 #ifndef ORIGINAL_CODE
 	int m_lastX;

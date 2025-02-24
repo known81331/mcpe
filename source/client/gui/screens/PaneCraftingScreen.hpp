@@ -9,6 +9,7 @@
 #pragma once
 
 #include "../Screen.hpp"
+#include "../components/ImageButton.hpp"
 
 class PaneCraftingScreen : public Screen
 {
@@ -24,13 +25,7 @@ public:
 private:
 	//int field_3C;
 	int field_40;
-	Button m_btnBack;
-	Button m_btnQuit;
-	Button m_btnQuitAndCopy;
-	Button m_btnVisible;
-
-#ifdef ENH_ADD_OPTIONS_PAUSE
-	Button m_btnOptions;
-#endif
+	ImageButton m_btnBack;
+	ImageButton m_btnCategory[4];
 };
 

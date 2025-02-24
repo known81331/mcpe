@@ -18,6 +18,7 @@ void Button::_init()
 	m_bEnabled = true;
 	m_bVisible = true;
 	field_36 = false;
+	m_bHoverable = true;
 
 #ifndef ORIGINAL_CODE
 	m_lastX = 0;
@@ -92,6 +93,7 @@ void Button::render(Minecraft* pMinecraft, int xPos, int yPos)
 	if (!m_bVisible) return;
 
 #ifdef ENH_HIGHLIGHT_BY_HOVER
+if (m_bHoverable)
 	field_36 = clicked(pMinecraft, xPos, yPos);
 #endif
 
@@ -110,9 +112,9 @@ void Button::render(Minecraft* pMinecraft, int xPos, int yPos)
         
         iYPos = 68;
         
-        blit(m_xPos, m_yPos+6, 16, iYPos, 5, m_height-6, 5, 14);
-        blit(m_xPos+2, m_yPos+6, 20, iYPos, m_width-2, m_height-6, 5, 14);
-        blit(m_xPos + m_width - 10, m_yPos+6, 22, iYPos, 10, m_height-6, 10, 14);
+        blit(m_xPos, m_yPos+6, 16, iYPos, 5, m_height-6, 5, 8);
+        blit(m_xPos+2, m_yPos+6, 20, iYPos, m_width-2, m_height-6, 5, 8);
+        blit(m_xPos + m_width - 10, m_yPos+6, 22, iYPos, 10, m_height-6, 10, 8);
         
         blit(m_xPos, m_yPos+m_height-10, 16, iYPos, 5, 13, 5, 16);
         blit(m_xPos+2, m_yPos+m_height-10, 20, iYPos, m_width-2, 13, 5, 16);
@@ -126,9 +128,9 @@ void Button::render(Minecraft* pMinecraft, int xPos, int yPos)
         
         iYPos = 68;
         
-        blit(m_xPos, m_yPos+6, 0, iYPos, 5, m_height-10, 5, 10);
-        blit(m_xPos+2, m_yPos+6, 2, iYPos, m_width-2, m_height-10, 5, 10);
-        blit(m_xPos + m_width - 10, m_yPos+6, 6, iYPos, 10, m_height-10, 10, 10);
+        blit(m_xPos, m_yPos+6, 0, iYPos, 5, m_height-10, 5, 6);
+        blit(m_xPos+2, m_yPos+6, 2, iYPos, m_width-2, m_height-10, 5, 6);
+        blit(m_xPos + m_width - 10, m_yPos+6, 6, iYPos, 10, m_height-10, 10, 6);
         
         blit(m_xPos, m_yPos+m_height-10, 0, iYPos, 5, 10, 5, 10);
         blit(m_xPos+2, m_yPos+m_height-10, 2, iYPos, m_width-2, 10, 5, 10);

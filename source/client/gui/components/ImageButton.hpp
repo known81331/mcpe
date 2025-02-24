@@ -25,6 +25,7 @@ class ImageButton : public Button
 private:
 	void _init();
 public:
+	ImageButton();
 	ImageButton(int, int x, int y, int width, int height, const std::string&);
 	ImageButton(int, int x, int y, const std::string&);
 	ImageButton(int, const std::string&);

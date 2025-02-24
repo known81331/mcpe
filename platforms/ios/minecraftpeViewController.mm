@@ -79,9 +79,9 @@ NSThread *G_drawFrameThread = nil;
         bounds.origin.x = 0, bounds.origin.y = 0;
         bounds.size.width = 0, bounds.size.height = 0;
     }
-    //if (bounds.size.width > bounds.size.height)
-    //    bounds.size.height = bounds.size.width;
-    return bounds.size.height * self->viewScale;
+    if (bounds.size.width > bounds.size.height)
+        bounds.size.height = bounds.size.width;
+    return bounds.size.width * self->viewScale;
 }
 
 - (int)height
@@ -97,9 +97,9 @@ NSThread *G_drawFrameThread = nil;
         bounds.origin.x = 0, bounds.origin.y = 0;
         bounds.size.width = 0, bounds.size.height = 0;
     }
-    //if (bounds.size.width > bounds.size.height)
-    //    bounds.size.height = bounds.size.width;
-    return bounds.size.width * self->viewScale;
+    if (bounds.size.width > bounds.size.height)
+        bounds.size.height = bounds.size.width;
+    return bounds.size.height * self->viewScale;
 }
 
 - (void)updateDrawSize

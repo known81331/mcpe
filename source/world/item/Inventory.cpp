@@ -187,7 +187,7 @@ void Inventory::addItem(ItemInstance* pInst)
 		if (m_bIsSurvival) {
 			for (int i = 0; i < getNumSlots(); i++) {
 				auto* item = getQuickSlotItem(i);
-				if (item && item->m_itemID == pInst->m_itemID && item->m_amount < item->getMaxStackSize() )
+				if (m_hotbar[i] == fi && item && item->m_itemID == pInst->m_itemID && item->m_amount <= item->getMaxStackSize() )
 					return;
 			}
 

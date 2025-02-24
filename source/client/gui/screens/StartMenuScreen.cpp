@@ -350,18 +350,20 @@ const char* gSplashes[] =
 	"https://github.com/ReMinecraftPE/mcpe"
 };
 
+ImageDef bbbtndeff = {
+    // 0.6.x button preset
+    //0, 26, 75, 75,
+    //75, 26, 75, 75,
+
+    218, 0, 27, 27, 4, 6,
+    218, 0, 27, 27, 4, 6,
+    "gui/touchgui.png"
+};
+
 StartMenuScreen::StartMenuScreen() :
 	m_startButton  (2,   0, 0, 110, 32, "Play"),
 	m_joinButton   (3,   0, 0, 160, 32, "Join Game"),
-	m_optionsButton(4, "", {
-		// 0.6.x button preset
-		//0, 26, 75, 75,
-		//75, 26, 75, 75,
-
-		218, 0, 27, 27, 4, 6,
-		218, 0, 27, 27, 4, 6,
-		"gui/touchgui.png"
-	} ),//   0, 0,  40, 40, "Options"),
+	m_optionsButton(4, "", bbbtndeff),//   0, 0,  40, 40, "Options"),
 	m_testButton   (999, 0, 0,  78, 22, "Test"),
 	m_buyButton    (5,   0, 0,  78, 22, "Buy")
 {

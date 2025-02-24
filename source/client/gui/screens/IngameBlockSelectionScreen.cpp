@@ -7,18 +7,15 @@
  ********************************************************************/
 
 #include "IngameBlockSelectionScreen.hpp"
+#include "PaneCraftingScreen.hpp"
 #include "PauseScreen.hpp"
 #include "client/app/Minecraft.hpp"
 #include "client/renderer/entity/ItemRenderer.hpp"
 
 std::string g_sNotAvailableInDemoVersion = "Not available in the demo version";
-
+extern ImageDef btndddef;
 IngameBlockSelectionScreen::IngameBlockSelectionScreen() :
-	m_btnPause(0, "", {
-		120, 0, 36, 36, 0, 0,
-		156, 0, 36, 36, 0, 0,
-		"gui/spritesheet.png"
-	}),
+	m_btnPause(0, "", btndddef),
 	m_btnArmor(1, "Armor"),
 	m_btnCrafting(2, "Craft")
 {
@@ -180,6 +177,9 @@ void IngameBlockSelectionScreen::buttonClicked(Button* pButton)
 	if (pButton->m_buttonId == m_btnPause.m_buttonId)
 	//	m_pMinecraft->setScreen(new PauseScreen);
 		m_pMinecraft->setScreen(nullptr);
+
+	if (pButton->m_buttonId == m_btnCrafting.m_buttonId)
+		m_pMinecraft->setScreen(new PaneCraftingScreen);
 }
 
 void IngameBlockSelectionScreen::mouseClicked(int x, int y, int type)

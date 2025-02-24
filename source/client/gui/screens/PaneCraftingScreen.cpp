@@ -9,18 +9,20 @@
 #include "PaneCraftingScreen.hpp"
 #include "OptionsScreen.hpp"
 #include "network/ServerSideNetworkHandler.hpp"
+#include "client/app/Minecraft.hpp"
+
+ImageDef btndddef = {
+    120, 0, 36, 36, 0, 0,
+    156, 0, 36, 36, 0, 0,
+    "gui/spritesheet.png"
+};
 
 PaneCraftingScreen::PaneCraftingScreen() :
 	//field_3C(0),
-	field_40(0),
-	m_btnBack(1, "Back to game"),
-	m_btnQuit(2, "Quit to title"),
-	m_btnQuitAndCopy(3, "Quit and copy map"),
-	m_btnVisible(4, "")
-#ifdef ENH_ADD_OPTIONS_PAUSE
-	, m_btnOptions(999, "Options")
-#endif
+	field_40(0),	
+	m_btnBack(0, "", btndddef)
 {
+
 }
 
 void PaneCraftingScreen::init()
@@ -29,83 +31,85 @@ void PaneCraftingScreen::init()
 	
 	int nButtons = 2;
 
-	if (bAddVisibleButton)
-		nButtons++;
-
-#ifdef ENH_ADD_OPTIONS_PAUSE
-	nButtons++;
-#endif
-
 	int currY = 48, inc = 32;
 
 	bool cramped = m_height < currY + inc * nButtons + 10; // also add some padding
 	if (cramped)
 		inc = 25;
 
-	m_btnQuit.m_width = 160;
-	m_btnBack.m_width = 160;
-	m_btnVisible.m_width = 160;
-	m_btnQuitAndCopy.m_width = 160;
+	m_btnBack.m_width = m_btnBack.m_height = 19;
 
-	m_btnBack.m_yPos = currY; currY += inc;
-	m_btnQuit.m_yPos = currY; currY += inc;
-	m_btnBack.m_xPos = (m_width - 160) / 2;
-	m_btnQuit.m_xPos = (m_width - 160) / 2;
-	m_btnVisible.m_xPos = (m_width - 160) / 2;
-	m_btnQuitAndCopy.m_xPos = (m_width - 160) / 2;
+	m_btnBack.m_yPos = 2;
+	m_btnBack.m_xPos = m_width-21;
 
-	m_btnVisible.m_yPos =
-	m_btnQuitAndCopy.m_yPos = currY;
 
-#ifdef ENH_ADD_OPTIONS_PAUSE
-	// TODO: when visible or quit&copy are on, lower this
-	m_btnOptions.m_width = 160;
-	m_btnOptions.m_yPos = currY;
-	m_btnOptions.m_xPos = m_btnBack.m_xPos;
-#endif
 	currY += inc;
 
 	// add the buttons to the screen:
 	m_buttons.push_back(&m_btnBack);
-	m_buttons.push_back(&m_btnQuit);
 
-#ifdef ENH_ADD_OPTIONS_PAUSE
-	m_buttons.push_back(&m_btnOptions);
-#endif
+	m_btnCategory[0] = ImageButton(6, "", {
+		0, 128, 64, 64, 0, 0,
+		0, 128, 64, 64, 0, 0,
+		"gui/spritesheet.png"
+	});
+
+	printf("%d \n", m_height);
+	int btnsWidth = (54.f / 240) * m_height, btnsSpacing = (2.f / 240) * m_height;
+	m_btnCategory[0].m_yPos = 9.f / 240 * m_height;
+	m_btnCategory[0].field_36 = true;
+
+	m_btnCategory[1] = ImageButton(7, "", {
+		0, 192, 64, 64, 0, 0,
+		0, 192, 64, 64, 0, 0,
+		"gui/spritesheet.png"
+	});
+
+
+	m_btnCategory[2] = ImageButton(8, "", {
+		64, 128, 64, 64, 0, 0,
+		64, 128, 64, 64, 0, 0,
+		"gui/spritesheet.png"
+	});
+
+
+	m_btnCategory[3] = ImageButton(9, "", {
+		64, 192, 64, 64, 0, 0,
+		64, 192, 64, 64, 0, 0,
+		"gui/spritesheet.png"
+	});
+
+	m_btnCategory[0].m_xPos = 10.f / 240 * m_height;
+	m_btnCategory[1].m_xPos = 10.f / 240 * m_height;
+	m_btnCategory[2].m_xPos = 10.f / 240 * m_height;
+	m_btnCategory[3].m_xPos = 10.f / 240 * m_height;
+
+	m_btnCategory[0].m_width = m_btnCategory[0].m_height = btnsWidth;
+	m_btnCategory[1].m_width = m_btnCategory[1].m_height = btnsWidth;
+	m_btnCategory[2].m_width = m_btnCategory[2].m_height = btnsWidth;
+	m_btnCategory[3].m_width = m_btnCategory[3].m_height = btnsWidth;
+
+	m_btnCategory[1].m_yPos = m_btnCategory[0].m_yPos + m_btnCategory[0].m_height + btnsSpacing;
+	m_btnCategory[2].m_yPos = m_btnCategory[1].m_yPos + m_btnCategory[0].m_height + btnsSpacing;
+	m_btnCategory[3].m_yPos = m_btnCategory[2].m_yPos + m_btnCategory[0].m_height + btnsSpacing;
+
+	m_btnCategory[0].m_bHoverable = false;
+	m_btnCategory[1].m_bHoverable = false;
+	m_btnCategory[2].m_bHoverable = false;
+	m_btnCategory[3].m_bHoverable = false;
+
+	m_buttons.push_back(&m_btnCategory[0]);
+	m_buttons.push_back(&m_btnCategory[1]);
+	m_buttons.push_back(&m_btnCategory[2]);
+	m_buttons.push_back(&m_btnCategory[3]);
 	
-	//m_buttons.push_back(&m_btnQuitAndCopy);
-
-	if (bAddVisibleButton)
-	{
-		updateServerVisibilityText();
-		m_buttons.push_back(&m_btnVisible);
-#ifdef ENH_ADD_OPTIONS_PAUSE
-		m_btnOptions.m_yPos += inc;
-#endif
-	}
-
-	//swap the options and quit buttons around (??)
-//	std::swap(m_btnOptions.m_yPos, m_btnQuit.m_yPos);
-
 	for (int i = 0; i < int(m_buttons.size()); i++)
 		m_buttonTabList.push_back(m_buttons[i]);
 
-#ifdef __EMSCRIPTEN__
-	m_btnVisible.m_bEnabled = false;
-#endif
 }
 
 void PaneCraftingScreen::updateServerVisibilityText()
 {
-	if (!m_pMinecraft->m_pRakNetInstance) return;
-	if (!m_pMinecraft->m_pRakNetInstance->m_bIsHost) return;
-
-	ServerSideNetworkHandler* pSSNH = (ServerSideNetworkHandler*)m_pMinecraft->m_pNetEventCallback;
-
-	if (pSSNH->m_bAllowIncoming)
-		m_btnVisible.m_text = "Server is visible";
-	else
-		m_btnVisible.m_text = "Server is invisible";
 }
 
 void PaneCraftingScreen::tick()
@@ -115,9 +119,39 @@ void PaneCraftingScreen::tick()
 
 void PaneCraftingScreen::render(int a, int b, float c)
 {
-	renderBackground();
 
-	drawCenteredString(m_pFont, "Game menu", m_width / 2, 24, 0xFFFFFF);
+	Textures* pTexs = m_pMinecraft->m_pTextures;
+
+	pTexs->loadAndBindTexture("gui/spritesheet.png");
+
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    
+		int texSize = 12;
+		
+        blit(0, 0, 8, 8, m_width, m_height, 24-8,  24-8);
+
+        blit(0, 0, 15, 0, m_width, texSize, 1,16);
+        blit(0, m_height-texSize, 15,16, m_width, texSize, 1,16);
+        blit(0, 0, 0, 8, texSize, m_height, 16,  16);
+        blit(m_width-texSize, 0, 16, 8, texSize, m_height, 16,  16);
+
+
+        blit(0, 0, 0, 0, texSize, texSize, 16,16);
+        blit(m_width-texSize, 0, 16, 0, texSize, texSize, 16,  16);
+
+
+        blit(0, m_height-texSize, 0, 16, texSize, texSize, 16,  16);
+        blit(m_width-texSize, m_height-texSize, 16, 16, texSize, texSize, 16,  16);
+
+
+		
+
+
+
+	drawCenteredString(m_pFont, "Crafting TEST", m_width / 2, 24, 0xFFFFFF);
+
+
+
 	Screen::render(a, b, c);
 }
 
@@ -126,25 +160,10 @@ void PaneCraftingScreen::buttonClicked(Button* pButton)
 	if (pButton->m_buttonId == m_btnBack.m_buttonId)
 		m_pMinecraft->setScreen(nullptr);
 
-	if (pButton->m_buttonId == m_btnQuit.m_buttonId)
-		m_pMinecraft->leaveGame(false);
-
-	if (pButton->m_buttonId == m_btnQuitAndCopy.m_buttonId)
-		m_pMinecraft->leaveGame(true);
-
-	if (pButton->m_buttonId == m_btnVisible.m_buttonId)
-	{
-		if (m_pMinecraft->m_pRakNetInstance && m_pMinecraft->m_pRakNetInstance->m_bIsHost)
-		{
-			ServerSideNetworkHandler* pSSNH = (ServerSideNetworkHandler*)m_pMinecraft->m_pNetEventCallback;
-			pSSNH->allowIncomingConnections(!pSSNH->m_bAllowIncoming);
-
-			updateServerVisibilityText();
+	for (int i = 0; i < 4; i++) {
+		m_btnCategory[i].field_36 = false;
+		if (pButton->m_buttonId == m_btnCategory[i].m_buttonId) {
+			m_btnCategory[i].field_36 = true;
 		}
 	}
-
-#ifdef ENH_ADD_OPTIONS_PAUSE
-	if (pButton->m_buttonId == m_btnOptions.m_buttonId)
-		m_pMinecraft->setScreen(new OptionsScreen);
-#endif
 }
